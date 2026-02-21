@@ -15,7 +15,7 @@ res.send('Pepe el pollo')
 mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoAtlas conected'))
-    .catch(err => console.error(error));
+    .catch(err => console.error(err))
 
 
 app.listen(port, () => {
