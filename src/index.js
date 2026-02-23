@@ -7,8 +7,6 @@ connectDB();
 
 const app = express();
 
-app.use(express.json());
-
 // Rutas
 app.use('/directors', directorsRoute);
 
