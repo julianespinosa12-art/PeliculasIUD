@@ -1,47 +1,24 @@
-const express = require('express');
-const connectDB = require('./config/database');
-import genereRoutes from './routes/generes.js';
-require('dotenv').config();
+import express from 'express';
+import 'dotenv/config';  // ← Carga las variables de .env
+import directorsRoute from './routes/directors.js';
+import connectDB from './config/database.js';  // ← Importas la función
+
+connectDB();
 
 const app = express();
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true }));
+// Rutas
+app.use('/directors', directorsRoute);
 
-connectDB();
-
-app.use('/generes', genreRoutes);
-
+// Ruta de prueba
 app.get('/', (req, res) => {
-  res.json({
-    message: '🎬 API Películas IUD - EA1',
-    version: '1.0.0',
-    endpoints: {},
-    status: 'OK'
-  });
+  res.json({ message: '🚀 Servidor activo' });
 });
 
-// Manejo de 404
-app.use((req, res) => {
-  res.status(404).json({ 
-    success: false, 
-    message: 'Ruta no encontrada' 
-  });
-});
-
-// Manejo de errores global
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Error interno del servidor',
-    error: err.message
-  });
-});
-
+// Servidor
 const PORT = process.env.PORT || 9000;
-
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
