@@ -1,29 +1,16 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import connectDB from '../config/database.js';
 
-const directorSchema = new mongoose.Schema({
-  names: {
-    type: String,
-    required: [true, 'Los nombres del director son obligatorios'],
-    trim: true
-  },
-  status: {
-    type: String,
-    enum: ['activo', 'inactivo'],
-    default: 'activo'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+class DirectorModel {
 
-directorSchema.pre('save', function(next) {
-  this.updatedAt = Date.now();
-  next();
-});
+async getAllDirectors() {
+  try {
+    const directors = await connectDB();
+    return directors;
+  } catch (error) {
+    console.error('Error al obtener los directores:', error.message);
+  }     
 
-module.exports = mongoose.model('Director', directorSchema);
+
+} 
+}
