@@ -4,7 +4,7 @@ import directorController from '../controllers/directorController.js';
 
 
 route.get('/', directorController.getAllDirectors);
-route.get('/:id', directorController.getDirector);
+route.get('/:id', directorController.getOneDirector);
 route.post('/', directorController.createDirector);
 route.put('/:id', directorController.updateDirector);
 route.delete('/:id', directorController.deleteDirector);

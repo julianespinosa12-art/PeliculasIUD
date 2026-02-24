@@ -1,11 +1,11 @@
 import express from 'express';
 import 'dotenv/config';  // ← Carga las variables de .env
 import directorsRoute from './routes/directors.js';
-import connectDB from './config/database.js';  // ← Importas la función
 
-connectDB();
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 app.use('/directors', directorsRoute);

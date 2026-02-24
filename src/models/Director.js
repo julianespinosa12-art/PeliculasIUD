@@ -1,41 +1,35 @@
-import connectDB from '../config/database.js';
+import { ObjectId } from 'mongodb';
+import dbClient from '../config/dbClient.js';
+
+const connectDB = dbClient;
 
 class DirectorModel {
 
-async getAllDirectors() {
-  try {
-    const directors = await connectDB();
-    return directors;
-  } catch (error) {
-    console.error('Error al obtener los directores:', error.message);
-  }     
-
-
-} 
-async getDirectorById(id) {
-  try {
-    const director = await connectDB();
-    return director;
-  } catch (error) {
-    console.error('Error al obtener el director:', error.message);
+  async create(director) {
+    const colDirectores = connectDB.db.collection('Directores');
+   return await colDirectores.insertOne(director)
+   
   } 
 
-}
+  async getAll() {
+    const colDirectores = connectDB.db.collection('Directores');
+    return await colDirectores.find({}).toArray();
+  }
 
-async createDirector(director) {
-
-    const coldirector = dbconnectDB.db.collection('directors');
-    await coldirector.insertOne(director);
-  } 
+  async getOneDirector(id) {
+    const colDirectores = connectDB.db.collection('Directores');
+    return await colDirectores.findOne({_id: new ObjectId(id)});
+  }
 
   async updateDirector(id, director) {
-    const updatedDirector = dbconnectDB.db.collection('directors');
-    await updatedDirector.updateOne({ _id: id }, director);
+    const colDirectores = connectDB.db.collection('Directores');
+    return await colDirectores.updateOne({_id: new ObjectId(id)}, {$set: director});
   }
 
   async deleteDirector(id) {
-    const deletedDirector = dbconnectDB.db.collection('directors');
-    await deletedDirector.deleteOne({ _id: id });
+    const colDirectores = connectDB.db.collection('Directores');
+    return await colDirectores.deleteOne({_id: new ObjectId(id)});
   }
+
 }
 export default new DirectorModel();
